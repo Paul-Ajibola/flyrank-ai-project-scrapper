@@ -1,1 +1,4 @@
 fastapi
+requests
+beautifulsoup4
+pydantic
