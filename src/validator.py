@@ -32,6 +32,7 @@ class NormalizedBook(BaseModel):
             
         return values
 
+
     @field_validator("price", mode="before")
     @classmethod
     def parse_price(cls, v):
@@ -42,6 +43,7 @@ class NormalizedBook(BaseModel):
             return 0.0
         cleaned = re.sub(r"[^\d.]", "", str(v))
         return float(cleaned) if cleaned else 0.0
+
 
     @field_validator("stock_count", mode="before")
     @classmethod
@@ -57,6 +59,7 @@ class NormalizedBook(BaseModel):
         if "in stock" in str(v).lower():
             return 0
         return 0
+
 
     @field_validator("rating", mode="before")
     @classmethod
