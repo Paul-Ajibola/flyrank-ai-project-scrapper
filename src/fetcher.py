@@ -16,7 +16,7 @@ def fetch_page(url, filename):
         with open(cache_path, "r", encoding="utf-8") as f:
             content = f.read()
         print(f"Response size: {len(content)} bytes")
-        return content
+        return content, True
 
 
     # Fetch from the web if not cached
@@ -29,11 +29,11 @@ def fetch_page(url, filename):
         response = requests.get(url, headers=headers, timeout=10)
     except requests.exceptions.RequestException as e:
         print(f"Network error fetching {url}: {e}")
-        return None
+        return None, False
 
     if response.status_code != 200:
         print(f"Failed fetch {url}. Status code: {response.status_code}")
-        return None
+        return None, False
 
     content = response.text
     with open(cache_path, "w", encoding="utf-8") as f:
@@ -41,4 +41,5 @@ def fetch_page(url, filename):
 
     # delay on live network requests
     time.sleep(0.2)
-    return content
+    return content, False
+
